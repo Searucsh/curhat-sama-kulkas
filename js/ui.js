@@ -17,13 +17,13 @@ const KulkasUI = {
   dom: {},
 
   // Inisialisasi Audio Context
-  initAudio: function() {
+  initAudio: function () {
     if (this.audioCtx) return;
 
     try {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       this.audioCtx = new AudioContextClass();
-      
+
       // Master Gain untuk Mute/Unmute
       this.masterGain = this.audioCtx.createGain();
       this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 0.15, this.audioCtx.currentTime);
@@ -31,7 +31,7 @@ const KulkasUI = {
 
       // Mulai humming background
       this.setupHumming();
-      
+
       console.log("Web Audio API berhasil diinisialisasi.");
     } catch (e) {
       console.error("Gagal menginisialisasi Web Audio API:", e);
@@ -39,7 +39,7 @@ const KulkasUI = {
   },
 
   // Setup suara kompresor berdengung
-  setupHumming: function() {
+  setupHumming: function () {
     if (!this.audioCtx) return;
 
     // 1. Oscillator 1 (Dengung Utama - Rendah)
@@ -86,9 +86,9 @@ const KulkasUI = {
   },
 
   // Toggle Mute / Unmute
-  toggleMute: function() {
+  toggleMute: function () {
     this.isMuted = !this.isMuted;
-    
+
     // Inisialisasi audio jika belum pernah
     if (!this.audioCtx) {
       this.initAudio();
@@ -108,14 +108,14 @@ const KulkasUI = {
   },
 
   // Efek Suara Psssst (Uap Dingin) menggunakan White Noise
-  playSteamSound: function() {
+  playSteamSound: function () {
     if (!this.audioCtx || this.isMuted) return;
 
     // Buat Buffer White Noise
     const bufferSize = this.audioCtx.sampleRate * 1.5; // Durasi 1.5 detik
     const buffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
     const data = buffer.getChannelData(0);
-    
+
     // Isi buffer dengan noise acak
     for (let i = 0; i < bufferSize; i++) {
       data[i] = Math.random() * 2 - 1;
@@ -145,12 +145,12 @@ const KulkasUI = {
   },
 
   // Efek Suara Klik Pintu (Dua kali klik magnetik)
-  playClickSound: function() {
+  playClickSound: function () {
     if (!this.audioCtx || this.isMuted) return;
 
     const playClick = (timeOffset) => {
       const time = this.audioCtx.currentTime + timeOffset;
-      
+
       const osc = this.audioCtx.createOscillator();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(180, time);
@@ -162,7 +162,7 @@ const KulkasUI = {
 
       osc.connect(gain);
       gain.connect(this.masterGain);
-      
+
       osc.start(time);
       osc.stop(time + 0.07);
     };
@@ -173,33 +173,33 @@ const KulkasUI = {
   },
 
   // Efek Suara Blip Ketikan Mulut Kulkas
-  playTalkBlip: function() {
+  playTalkBlip: function () {
     if (!this.audioCtx || this.isMuted) return;
 
     const osc = this.audioCtx.createOscillator();
     osc.type = 'triangle';
-    
+
     // Nada acak agar terdengar natural layaknya suku kata
-    const baseFreq = 160 + Math.random() * 280; 
+    const baseFreq = 160 + Math.random() * 280;
     osc.frequency.setValueAtTime(baseFreq, this.audioCtx.currentTime);
-    
+
     const gain = this.audioCtx.createGain();
     gain.gain.setValueAtTime(0.08, this.audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + 0.04);
 
     osc.connect(gain);
     gain.connect(this.masterGain);
-    
+
     osc.start();
     osc.stop(this.audioCtx.currentTime + 0.05);
   },
 
   // Ubah visual wajah kulkas berdasarkan Mood
-  setFridgeEmotion: function(mood) {
+  setFridgeEmotion: function (mood) {
     const eyes = document.querySelectorAll('.kulkas-eye');
     const pupils = document.querySelectorAll('.kulkas-pupil');
     const mouth = document.querySelector('.kulkas-mouth');
-    
+
     // Reset kelas
     eyes.forEach(e => {
       e.classList.remove('eye-judgmental', 'eye-confused');
@@ -229,26 +229,26 @@ const KulkasUI = {
   },
 
   // Animasi Mengetik Teks Kulkas dengan sinkronisasi Mulut & Suara
-  typeMessage: function(text, onComplete) {
+  typeMessage: function (text, onComplete) {
     const mouth = document.querySelector('.kulkas-mouth');
     const body = document.querySelector('.kulkas-body');
     const chatContainer = this.dom.chatContainer;
-    
+
     // Buat element bubble chat kulkas baru
     const chatBubbleWrapper = document.createElement('div');
     chatBubbleWrapper.className = 'flex justify-start mb-4';
-    
+
     const bubble = document.createElement('div');
     bubble.className = 'chat-bubble bg-slate-800 text-slate-100 px-4 py-3 rounded-2xl rounded-tl-none border border-slate-700 shadow-md max-w-[85%]';
-    
+
     // Indikator mood kulkas kecil di atas bubble
     const moodBadge = document.createElement('span');
     moodBadge.className = 'text-[9px] text-blue-400 font-mono block mb-1 uppercase tracking-wider';
     moodBadge.innerText = `[ Kulkas: ${this.currentMood || 'DINGIN'} ]`;
-    
+
     const textNode = document.createElement('span');
     textNode.className = 'leading-relaxed text-sm';
-    
+
     bubble.appendChild(moodBadge);
     bubble.appendChild(textNode);
     chatBubbleWrapper.appendChild(bubble);
@@ -265,16 +265,16 @@ const KulkasUI = {
 
     let index = 0;
     const typingInterval = 35; // Kecepatan mengetik (ms)
-    
+
     const type = () => {
       if (index < text.length) {
         textNode.innerHTML += text.charAt(index);
-        
+
         // Picu suara blip ketikan di karakter tertentu saja (supaya tidak terlalu berisik)
         if (text.charAt(index) !== ' ' && index % 2 === 0) {
           this.playTalkBlip();
         }
-        
+
         index++;
         this.scrollToBottom();
         setTimeout(type, typingInterval);
@@ -282,10 +282,10 @@ const KulkasUI = {
         // Selesai mengetik
         mouth.classList.remove('mouth-talking');
         body.classList.remove('kulkas-humming');
-        
+
         // Simpan ke riwayat
         this.saveChatToHistory('kulkas', text, this.currentMood);
-        
+
         if (onComplete) onComplete();
       }
     };
@@ -294,7 +294,7 @@ const KulkasUI = {
   },
 
   // Buka/Tutup Pintu Kulkas
-  toggleDoor: function() {
+  toggleDoor: function () {
     const wrapper = document.querySelector('.kulkas-wrapper');
     const inside = document.querySelector('.kulkas-inside');
     const isOpening = !wrapper.classList.contains('door-open');
@@ -306,7 +306,7 @@ const KulkasUI = {
       wrapper.classList.add('door-open');
       this.playSteamSound();
       this.triggerMistEffect();
-      
+
       // Acak isi makanan di dalam kulkas setiap kali dibuka biar seru
       this.randomizeInsideFood();
     } else {
@@ -315,7 +315,7 @@ const KulkasUI = {
   },
 
   // Acak isi barang dalam kulkas
-  randomizeInsideFood: function() {
+  randomizeInsideFood: function () {
     const insideDiv = document.querySelector('.kulkas-inside');
     if (!insideDiv) return;
 
@@ -337,7 +337,7 @@ const KulkasUI = {
   },
 
   // Efek Embun/Mist Mengambang keluar dari Kulkas
-  triggerMistEffect: function() {
+  triggerMistEffect: function () {
     const wrapper = document.querySelector('.kulkas-wrapper');
     const particleCount = 10;
 
@@ -345,19 +345,19 @@ const KulkasUI = {
       setTimeout(() => {
         const particle = document.createElement('div');
         particle.className = 'mist-particle';
-        
+
         // Posisikan partikel di area tengah kulkas
         const rect = wrapper.getBoundingClientRect();
         const startX = rect.left + rect.width / 2 + (Math.random() * 60 - 30);
         const startY = rect.top + rect.height / 2 + (Math.random() * 120 - 60);
-        
+
         particle.style.left = `${startX}px`;
         particle.style.top = `${startY}px`;
         particle.style.width = `${40 + Math.random() * 50}px`;
         particle.style.height = particle.style.width;
-        
+
         document.body.appendChild(particle);
-        
+
         // Hapus partikel setelah animasi selesai
         setTimeout(() => {
           particle.remove();
@@ -367,22 +367,22 @@ const KulkasUI = {
   },
 
   // Scroll Chat History ke Paling Bawah
-  scrollToBottom: function() {
+  scrollToBottom: function () {
     const container = this.dom.chatContainer;
     container.scrollTop = container.scrollHeight;
   },
 
   // Rendering Chat Bubble untuk User
-  renderUserBubble: function(text) {
+  renderUserBubble: function (text) {
     const chatContainer = this.dom.chatContainer;
-    
+
     const wrapper = document.createElement('div');
     wrapper.className = 'flex justify-end mb-4';
-    
+
     const bubble = document.createElement('div');
     bubble.className = 'chat-bubble bg-amber-600 text-slate-100 px-4 py-3 rounded-2xl rounded-tr-none border border-amber-700 shadow-md max-w-[85%] text-sm leading-relaxed';
     bubble.innerText = text;
-    
+
     wrapper.appendChild(bubble);
     chatContainer.appendChild(wrapper);
     this.scrollToBottom();
@@ -392,11 +392,11 @@ const KulkasUI = {
   },
 
   // Simpan riwayat chat ke LocalStorage
-  saveChatToHistory: function(sender, text, mood = '') {
+  saveChatToHistory: function (sender, text, mood = '') {
     let history = [];
     try {
       history = JSON.parse(localStorage.getItem('curhat_kulkas_history')) || [];
-    } catch(e) {
+    } catch (e) {
       history = [];
     }
 
@@ -411,11 +411,11 @@ const KulkasUI = {
   },
 
   // Load chat dari LocalStorage saat inisialisasi
-  loadChatHistory: function() {
+  loadChatHistory: function () {
     let history = [];
     try {
       history = JSON.parse(localStorage.getItem('curhat_kulkas_history')) || [];
-    } catch(e) {
+    } catch (e) {
       history = [];
     }
 
@@ -442,15 +442,15 @@ const KulkasUI = {
         wrapper.className = 'flex justify-start mb-4';
         const bubble = document.createElement('div');
         bubble.className = 'chat-bubble bg-slate-800 text-slate-100 px-4 py-3 rounded-2xl rounded-tl-none border border-slate-700 shadow-md max-w-[85%]';
-        
+
         const moodBadge = document.createElement('span');
         moodBadge.className = 'text-[9px] text-blue-400 font-mono block mb-1 uppercase tracking-wider';
         moodBadge.innerText = `[ Kulkas: ${item.mood || 'SARKAS'} ]`;
-        
+
         const textNode = document.createElement('span');
         textNode.className = 'leading-relaxed text-sm';
         textNode.innerText = item.text;
-        
+
         bubble.appendChild(moodBadge);
         bubble.appendChild(textNode);
         wrapper.appendChild(bubble);
@@ -462,21 +462,21 @@ const KulkasUI = {
   },
 
   // Helper render bubble kulkas secara langsung tanpa animasi ngetik (untuk loading sejarah)
-  renderKulkasBubbleDirect: function(text, mood) {
+  renderKulkasBubbleDirect: function (text, mood) {
     const chatContainer = this.dom.chatContainer;
     const wrapper = document.createElement('div');
     wrapper.className = 'flex justify-start mb-4';
     const bubble = document.createElement('div');
     bubble.className = 'chat-bubble bg-slate-800 text-slate-100 px-4 py-3 rounded-2xl rounded-tl-none border border-slate-700 shadow-md max-w-[85%]';
-    
+
     const moodBadge = document.createElement('span');
     moodBadge.className = 'text-[9px] text-blue-400 font-mono block mb-1 uppercase tracking-wider';
     moodBadge.innerText = `[ Kulkas: ${mood || 'DINGIN'} ]`;
-    
+
     const textNode = document.createElement('span');
     textNode.className = 'leading-relaxed text-sm';
     textNode.innerText = text;
-    
+
     bubble.appendChild(moodBadge);
     bubble.appendChild(textNode);
     wrapper.appendChild(bubble);
@@ -485,17 +485,17 @@ const KulkasUI = {
   },
 
   // Reset Chat History (Ganti Kulkas)
-  resetExperience: function() {
+  resetExperience: function () {
     localStorage.removeItem('curhat_kulkas_history');
     const chatContainer = this.dom.chatContainer;
     chatContainer.innerHTML = '';
-    
+
     // Suara klik
     this.playClickSound();
-    
+
     // Kembali ke default mood visual
     this.setFridgeEmotion("Sarkastik (Default)");
-    
+
     // Beri salam pembuka baru
     setTimeout(() => {
       this.typeMessage("Duh... kulkas diganti baru ya? Oke, sekarang gw kulkas versi upgrade. Tapi tetep aja isinya cuma es batu abadi. Mau curhat apa lu sekarang?");

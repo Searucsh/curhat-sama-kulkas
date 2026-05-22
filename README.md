@@ -38,7 +38,7 @@ Selamat datang di **Curhat ke Kulkas**, sebuah website konseling absurd, receh, 
 ## 📁 Struktur Direktori Proyek
 
 ```text
-/ (root)
+/curhat-ke-kulkas/
 ├── index.html              # Halaman utama & layout UI responsif
 ├── assets/
 │   ├── css/
@@ -74,7 +74,7 @@ Menjalankan menggunakan server lokal membuat file loading lebih mulus dan andal:
    ```bash
    python -m http.server 8000
    ```
-   Akses di browser pada alamat `http://localhost:8000/`.
+   Akses di browser pada alamat `http://localhost:8000/curhat-ke-kulkas/`.
 
 ---
 
@@ -82,12 +82,12 @@ Menjalankan menggunakan server lokal membuat file loading lebih mulus dan andal:
 
 Jika Anda ingin membagikan tautan website absurd ini kepada teman kosan lainnya, Anda dapat meng-host-nya secara gratis di **GitHub Pages**:
 
-1. **Buat/Gunakan Repository Baru di GitHub:**
+1. **Buat Repository Baru di GitHub:**
    - Masuk ke akun GitHub Anda, pilih **New Repository**.
-   - Beri nama repository: `curhat-sama-kulkas`, lalu pilih opsi **Public**.
+   - Beri nama repository, misalnya `curhat-ke-kulkas`, lalu pilih opsi **Public**.
 
 2. **Inisialisasi Git di Komputer Anda:**
-   Buka terminal/command prompt di direktori root proyek Anda, lalu jalankan perintah berikut:
+   Buka terminal/command prompt di direktori folder `/curhat-ke-kulkas/` Anda, lalu jalankan perintah berikut:
    ```bash
    git init
    git add .
@@ -98,19 +98,19 @@ Jika Anda ingin membagikan tautan website absurd ini kepada teman kosan lainnya,
    Ganti `<username-kamu>` dengan nama pengguna GitHub Anda:
    ```bash
    git branch -M main
-   git remote add origin https://github.com/<username-kamu>/curhat-sama-kulkas.git
+   git remote add origin https://github.com/<username-kamu>/curhat-ke-kulkas.git
    git push -u origin main
    ```
 
 4. **Aktifkan GitHub Pages:**
    - Buka halaman repositori Anda di GitHub.
    - Klik tab **Settings** di bagian atas kanan.
-   - Pada sidebar kiri, gulir ke bawah lalu pilih menu **Pages**.
+   - Pada sidebar kiri, gulir ke bawah lalu pilih menu **Pages** (di bawah bagian *Code and automation*).
    - Di bagian **Build and deployment**, ubah Source menjadi **Deploy from a branch**.
-   - Pada pilihan Branch di bawahnya, pilih **main** dan folder `/ (root)`. Klik **Save**.
+   - Pada pilihan Branch di bawahnya, pilih **main** (atau branch utama Anda) dan folder `/ (root)`. Klik **Save**.
    - Tunggu sekitar 1–2 menit, GitHub akan memproses deployment Anda.
    - Muat ulang (*refresh*) halaman Settings > Pages tersebut. Anda akan melihat tautan langsung web Anda di bagian atas:
-     `https://<username-kamu>.github.io/curhat-sama-kulkas/`
+     `https://<username-kamu>.github.io/curhat-ke-kulkas/`
 
 ---
 
