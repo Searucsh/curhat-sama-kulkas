@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curhat ke Kulkas - Konseling Absurd & Sarkastik Anak Kos</title>
+  <meta name="description" content="Website konseling paling dingin, absurd, dan sarkastik. Curahkan keluh kesahmu kepada kulkas kosan yang judgemental.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              950: '#090d16',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- FontAwesome untuk Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="malam-kosan-bg text-slate-100 min-h-screen flex flex-col justify-between">
+
+  <!-- Header Section -->
+  <header class="border-b border-slate-900 bg-slate-950/60 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="relative flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+      </div>
+      <h1 class="text-xl font-bold tracking-wider text-slate-200 flex items-center gap-2">
+        <i class="fa-solid fa-icicles text-blue-400"></i>
+        <span>CURHAT KE KULKAS</span>
+      </h1>
+    </div>
+    
+    <!-- Audio controls in Header -->
+    <div class="flex items-center gap-3">
+      <button id="btn-sound-header" class="px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/80 transition-all text-xs font-medium flex items-center gap-2 cursor-pointer text-amber-500" title="Aktifkan Suara Kompresor Kulkas">
+        <i class="fa-solid fa-volume-xmark" id="sound-icon-header"></i>
+        <span id="sound-status-text">MUTED (KLIK SINI)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-grow flex items-center justify-center p-4">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl w-full mx-auto items-center py-6">
+      
+      <!-- Left Column: The Interactive Kulkas -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center gap-6">
+        
+        <div class="kulkas-wrapper relative" id="interactive-kulkas">
+          
+          <!-- Outer Body -->
+          <div class="kulkas-body">
+            
+            <!-- Inside (Visible when door is open) -->
+            <div class="kulkas-inside">
+              <!-- Shelves with food will be rendered dynamically by JS -->
+              <div class="kulkas-shelf justify-around">
+                <div class="food-item text-2xl" data-tooltip="Token listrik tet-tet-tet">🚨</div>
+                <div class="food-item text-2xl" data-tooltip="Es batu abadi jaman dinasti Ming">🧊</div>
+              </div>
+              <div class="kulkas-shelf justify-around">
+                <div class="food-item text-2xl" data-tooltip="Air putih di botol sirup Marjan merah">🍾</div>
+                <div class="food-item text-2xl" data-tooltip="Telur sebutir, bertahan dari senin lalu">🥚</div>
+              </div>
+              <div class="kulkas-shelf justify-around">
+                <div class="food-item text-2xl" data-tooltip="Cabe keriting layu keriput">🌶️</div>
+                <div class="food-item text-2xl" data-tooltip="Harapan masa depan (kosong)">💨</div>
+              </div>
+            </div>
+            
+            <!-- Door -->
+            <div class="kulkas-door">
+              
+              <!-- 2 Door Separator line -->
+              <div class="kulkas-door-line"></div>
+              
+              <!-- Top Handle -->
+              <div class="kulkas-handle-top" onclick="KulkasUI.toggleDoor()" title="Buka Freezer"></div>
+              
+              <!-- Bottom Handle -->
+              <div class="kulkas-handle-bottom" onclick="KulkasUI.toggleDoor()" title="Buka Pintu Utama"></div>
+              
+              <!-- Kulkas Face (Eyes & Mouth) -->
+              <div class="kulkas-face">
+                <div class="kulkas-eyes">
+                  <div class="kulkas-eye">
+                    <div class="kulkas-pupil"></div>
+                  </div>
+                  <div class="kulkas-eye">
+                    <div class="kulkas-pupil"></div>
+                  </div>
+                </div>
+                <div class="kulkas-mouth"></div>
+              </div>
+
+              <!-- Stickers/Magnets (Aesthetic touches) -->
+              <div class="fridge-sticker bg-yellow-400 text-slate-900" style="left: 20px; top: 120px; --rot: -8deg;">
+                INDOMIE IS LIFE 🍜
+              </div>
+              <div class="fridge-sticker bg-red-500 text-white" style="left: 15px; top: 290px; --rot: 5deg; font-size: 8px;">
+                SUSU GW JGN DI-MINUM!! 😡
+              </div>
+              <div class="fridge-sticker bg-teal-400 text-slate-900" style="right: 35px; top: 280px; --rot: -12deg; font-size: 9px;">
+                TOKEN LISTRIK! ⚡
+              </div>
+              <div class="fridge-sticker bg-cyan-200 text-slate-900" style="left: 40px; top: 380px; --rot: 15deg;">
+                ES BATU ABADI ❄️
+              </div>
+              <div class="fridge-sticker bg-purple-500 text-white" style="right: 25px; top: 110px; --rot: 4deg; font-size: 8px;">
+                TUTUP PINTU RAPAAT!
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Fridge LED/Info Panel -->
+        <div class="w-full max-w-[280px] bg-slate-900/80 border border-slate-800 rounded-xl p-3 shadow-md">
+          <div class="grid grid-cols-2 gap-2 text-[10px] font-mono led-indicator">
+            <div class="border-r border-slate-800 pr-2">
+              <span class="text-slate-500 block">SUHU FREEZER:</span>
+              <span id="led-temp" class="text-blue-400 font-bold">-18.4°C</span>
+            </div>
+            <div class="pl-2">
+              <span class="text-slate-500 block">MOOD KULKAS:</span>
+              <span id="led-mood" class="text-amber-500 font-bold">SARKAS (DEFAULT)</span>
+            </div>
+            <div class="col-span-2 border-t border-slate-800 pt-1.5 mt-1 flex justify-between items-center">
+              <span>STATUS KOMPRESOR:</span>
+              <span id="led-compressor" class="text-green-500 flex items-center gap-1">
+                <i class="fa-solid fa-circle-nodes animate-pulse"></i> AKTIF
+              </span>
+            </div>
+          </div>
+          
+          <button id="btn-toggle-door-manual" class="mt-3 w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg text-[11px] transition-all cursor-pointer border border-slate-700 flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-door-open"></i>
+            <span id="door-btn-text">BUKA PINTU KULKAS</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Chat Console -->
+      <div class="lg:col-span-7 flex flex-col h-[520px] max-h-[75vh]">
+        <div class="flex-grow flex flex-col bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl overflow-hidden shadow-2xl">
+          
+          <!-- Chat Box Header -->
+          <div class="px-5 py-3 border-b border-slate-800 bg-slate-950/40 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-comments text-amber-500"></i>
+              <span class="text-xs font-mono text-slate-400">KONSELING_ROOM_01.EXE</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
+              <span class="text-[10px] font-mono text-slate-400">ONLINE</span>
+            </div>
+          </div>
+
+          <!-- Chat History (Dynamic content) -->
+          <div id="chat-container" class="flex-grow overflow-y-auto p-5 custom-scrollbar bg-slate-950/20">
+            <!-- Loading indicator/initial logs -->
+            <div class="flex justify-center items-center h-full text-slate-500 text-xs font-mono">
+              <i class="fa-solid fa-circle-notch animate-spin mr-2"></i> Memuat ingatan kulkas...
+            </div>
+          </div>
+
+          <!-- Chat Input Area -->
+          <div class="p-4 border-t border-slate-800/80 bg-slate-950/60">
+            <form id="chat-form" class="flex gap-2 mb-3">
+              <input type="text" id="chat-input" placeholder="Tulis keluh kesahmu di sini, manusia gabut..." class="flex-grow px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-slate-100 text-sm focus:outline-none focus:border-amber-600 transition-colors placeholder:text-slate-600" autocomplete="off" disabled>
+              <button type="submit" id="btn-send" class="px-5 bg-amber-600 hover:bg-amber-700 text-slate-100 rounded-xl transition-all font-bold text-sm flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </form>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex flex-wrap justify-between items-center gap-3">
+              <div class="flex gap-2">
+                <!-- Curhat Random Button -->
+                <button type="button" id="btn-random" class="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/20 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" title="Ketikan curhat kocak acak" disabled>
+                  <i class="fa-regular fa-lightbulb"></i>
+                  <span>Curhat Random</span>
+                </button>
+                
+                <!-- Reset Button -->
+                <button type="button" id="btn-reset" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" title="Hapus riwayat & ganti kulkas baru" disabled>
+                  <i class="fa-solid fa-trash-can"></i>
+                  <span>Ganti Kulkas</span>
+                </button>
+              </div>
+
+              <!-- Extra indicator -->
+              <span class="text-[10px] text-slate-500 font-mono hidden md:inline">
+                Press [Enter] to send
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Sticky footer info -->
+  <footer class="py-3 text-center border-t border-slate-900 bg-slate-950/40 text-[10px] text-slate-600 font-mono">
+    <span>© 2026 Curhat ke Kulkas. Absurd, Suka Nyindir, Tapi Nyata. Built with HTML, CSS, Vanilla JS, Web Audio API.</span>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/kulkas.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

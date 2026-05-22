@@ -1,0 +1,370 @@
+/* CSS Custom untuk Curhat ke Kulkas */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #090d16;
+  overflow-x: hidden;
+}
+
+/* Tema Malam Kosan - Radial Glow */
+.malam-kosan-bg {
+  background: radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.08) 0%, rgba(9, 13, 22, 1) 70%),
+              radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, rgba(9, 13, 22, 1) 100%);
+  background-attachment: fixed;
+}
+
+/* Kulkas Container & 3D Perspective */
+.kulkas-wrapper {
+  perspective: 1500px;
+}
+
+.kulkas-body {
+  position: relative;
+  width: 280px;
+  height: 480px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+/* Getaran Kulkas saat humming / kompresor aktif */
+@keyframes hum-vibe {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-0.5px, 0.5px) rotate(-0.1deg); }
+  40% { transform: translate(-0.5px, -0.5px) rotate(0.1deg); }
+  60% { transform: translate(0.5px, 0.5px) rotate(0deg); }
+  80% { transform: translate(0.5px, -0.5px) rotate(-0.1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.kulkas-humming {
+  animation: hum-vibe 0.15s infinite alternate ease-in-out;
+}
+
+/* Bagian Dalam Kulkas (Terlihat saat pintu terbuka) */
+.kulkas-inside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: #0f172a;
+  box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.4); /* Glow Dingin */
+  border: 3px solid #1e293b;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  z-index: 1;
+}
+
+/* Rak di dalam Kulkas */
+.kulkas-shelf {
+  border-bottom: 3px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.1);
+  height: 33%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding-bottom: 4px;
+}
+
+/* Pintu Kulkas */
+.kulkas-door {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #334155, #1e293b);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    5px 5px 15px rgba(0,0,0,0.3),
+    inset 2px 2px 5px rgba(255,255,255,0.05);
+  transform-origin: left center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  backface-visibility: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 40px;
+}
+
+/* Ketika Pintu Kulkas Terbuka */
+.door-open .kulkas-door {
+  transform: rotateY(-110deg);
+  box-shadow: 15px 5px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* Pembatas pintu atas dan bawah (biar keliatan kulkas 2 pintu) */
+.kulkas-door-line {
+  width: 100%;
+  height: 6px;
+  background: #0f172a;
+  position: absolute;
+  top: 160px;
+  left: 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Gagang Kulkas */
+.kulkas-handle-top {
+  position: absolute;
+  right: 15px;
+  top: 60px;
+  width: 12px;
+  height: 70px;
+  background: linear-gradient(90deg, #94a3b8, #64748b);
+  border-radius: 6px;
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.kulkas-handle-bottom {
+  position: absolute;
+  right: 15px;
+  top: 190px;
+  width: 12px;
+  height: 120px;
+  background: linear-gradient(90deg, #94a3b8, #64748b);
+  border-radius: 6px;
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.kulkas-handle-top:hover, .kulkas-handle-bottom:hover {
+  transform: scaleX(1.1) translateX(-1px);
+}
+
+/* Animasi Wajah Kulkas */
+.kulkas-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.kulkas-eyes {
+  display: flex;
+  gap: 30px;
+}
+
+/* Animasi Berkedip */
+@keyframes eye-blink {
+  0%, 95%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.1); }
+}
+
+.kulkas-eye {
+  width: 22px;
+  height: 22px;
+  background-color: #f8fafc;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(248, 250, 252, 0.3);
+  animation: eye-blink 4s infinite ease-in-out;
+}
+
+.kulkas-pupil {
+  width: 8px;
+  height: 8px;
+  background-color: #0f172a;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+/* Pupil menyipit judis/sarkas */
+.pupil-judgmental {
+  transform: scaleY(0.3) scaleX(1.2);
+}
+
+/* Mata menyipit julid */
+.eye-judgmental {
+  animation: none !important;
+  transform: scaleY(0.4);
+}
+
+/* Mata pusing/bingung */
+.eye-confused {
+  animation: none !important;
+  transform: rotate(45deg);
+}
+
+/* Mulut Kulkas */
+.kulkas-mouth {
+  width: 32px;
+  height: 6px;
+  background-color: #f8fafc;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 6px rgba(248, 250, 252, 0.2);
+}
+
+/* Animasi Berbicara */
+@keyframes talk-wiggle {
+  0%, 100% { height: 6px; border-radius: 3px; }
+  50% { height: 16px; border-radius: 50%; }
+}
+
+.mouth-talking {
+  animation: talk-wiggle 0.15s infinite alternate ease-in-out;
+}
+
+.mouth-judgmental {
+  width: 20px;
+  height: 4px;
+  transform: rotate(-5deg);
+}
+
+.mouth-confused {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid #f8fafc;
+  background: transparent;
+}
+
+.mouth-smile {
+  height: 10px;
+  border-radius: 0 0 15px 15px;
+}
+
+/* Partikel Embun Dingin (Mist Effect) */
+.mist-particle {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  z-index: 100;
+  animation: float-mist 1.8s forwards ease-out;
+}
+
+@keyframes float-mist {
+  0% {
+    transform: translateY(0) scale(0.5) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-80px) scale(2.5) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+/* Magnet dan Stiker Aesthetic di Kulkas */
+.fridge-sticker {
+  padding: 6px 10px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+  position: absolute;
+  transform: rotate(var(--rot));
+  user-select: none;
+  cursor: grab;
+}
+
+.fridge-sticker:active {
+  cursor: grabbing;
+}
+
+/* Custom Scrollbar untuk Chat History */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* Teks Glitch LED Kulkas */
+.led-indicator {
+  font-family: 'Share Tech Mono', monospace;
+  color: #3b82f6;
+  text-shadow: 0 0 5px rgba(59, 130, 246, 0.6);
+}
+
+/* Pintu Kulkas isi makanan */
+.food-item {
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.food-item:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.food-item::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-5px);
+  background: rgba(15, 23, 42, 0.95);
+  color: #f8fafc;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  z-index: 20;
+}
+
+.food-item:hover::after {
+  opacity: 1;
+}
+
+/* Chat bubble styling */
+.chat-bubble {
+  max-width: 85%;
+  position: relative;
+  animation: bubble-appear 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes bubble-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
